@@ -1,0 +1,33 @@
+<!-- tree -H '.' -L 20 --noreport --charset utf-8 > index.html -->
+<html lang="en">
+<head>
+    <title>Web based audio player</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <input type="file">
+    <div>Is audio player supported?</div>
+    <audio controls loop id="myAudio" autoplay>
+    </audio>
+<!--    the js is fetching an ID. Hence it must be rendered after the html element-->
+    <script>
+        var $audio = $('#myAudio');
+        $('input').on('change', function(e) {
+            var target = e.currentTarget;
+            var file = target.files[0];
+            var reader = new FileReader();
+
+            console.log($audio[0]);
+            if (target.files && file) {
+                reader = new FileReader();
+                reader.onload = function (e) {
+                    $audio.attr('src', e.target.result);
+                    $audio.play();
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+
+</body>
+</html>
